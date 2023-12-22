@@ -16,3 +16,23 @@ Crud de Empleados alojado en Minimal Api cuyo back fué desarrollado en .NET y c
 . Angular Forms (gestión de formularios)
 
 . Angular Material (estilos)
+
+-----
+
+Employee CRUD hosted on Minimal API, whose back-end was developed in .NET and whose front-end was developed in an Angular app. Resources/practices applied:
+
+. Dependency injection (to decouple components so they can be reused, tested, and maintained more efficiently)
+
+. Services (to encapsulate and modularize functionality related to a service or specific feature in an application)
+
+. Entity Framework (to interact with databases and perform CRUD operations on entities)
+
+. CORS (to allow/restrict HTTP requests between different origins to improve security and privacy)
+
+. DTOs (to separate business logic from the presentation layer)
+
+. AutoMapper (to copy values from a source object to a destination object that has a different but similar structure in terms of properties or fields)
+
+. Angular Forms (to manage forms)
+
+. Angular Material (for styling)
