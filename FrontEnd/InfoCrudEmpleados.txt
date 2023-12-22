@@ -1,0 +1,118 @@
+CRUD EMPLEADOS MINIMAL API
+
+*******************************************************************************************
+
+1. Crear BD
+
+*******************************************************************************************
+
+2. Crear API REST .NET
+-ASP.NET Core Web API
+-.NET 6.0
+-Deshabilitar Usar controladores - Configurar para HTTPS (API Minimal)
+
+Instalar paquetes:
+-Microsoft.EntityFrameworkCore.Tools
+-Microsoft.EntityFrameworkCore.SqlServer
+-Automapper 
+-AutoMapper.Extensions.Microsoft.DependencyInjection
+
+*******************************************************************************************
+
+3. Configurar BD en Proyecto
+
+Agregar carpeta Models
+-Scaffold-DbContext "Server=; DataBase=; Trusted_Connection=True; TrustServerCertificate=True;" Microsoft.EntityFrameworkCore.SqlServer -OutPutDir Models
+
+Mover cadena de conexión
+DbContext -> Vaciar método:
+protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) { }
+
+appsettings.json -> Agregar cadena de conexión
+  "ConnectionStrings": {
+    "connectionString" : "Server=; DataBase=; Trusted_Connection=True; TrustServerCertificate=True"
+  }
+
+Program.cs -> Asignar contexto antes del builder.Build():
+builder.Services.AddDbContext<DbempleadoAngularContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("connectionString"));
+});
+
+*******************************************************************************************
+
+4. Configurar Servicios (Services -> Interfaces e Implementacion)
+
+Program.cs -> Inyectar Servicios antes de builder.Build()
+builder.Services.AddScoped<IDepartamentoService, DepartamentoService>();
+builder.Services.AddScoped<IEmpleadoService, EmpleadoService>();
+
+*******************************************************************************************
+
+5. Configurar Automapper
+
+-Crear DTOs
+
+-Crear AutoMapperProfile
+
+-Agregar AutoMapper a Program.cs
+builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
+
+*******************************************************************************************
+
+6. Crear Solicitudes API REST en Program.cs
+
+*******************************************************************************************
+
+7. Habilitar CORS en Program.cs
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("NuevaPolitica", app =>
+    {
+        app.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+    });
+});
+
+
+(antes del app.Run)
+app.UseCors("NuevaPolitica");
+
+*******************************************************************************************
+
+8. Crear App Angular
+
+-Colocarnos en carpeta donde queramos hacer aplicacion con cmd -> ng new CarpetaAplicacion -> N -> CSS -> Aplicacion lista
+
+-Colocarnos en carpeta de aplicacion y abrir con code .
+
+-Terminal VS Code -> ng add @angular/material -> N -> Y -> indigo-pink -> Y -> Aplicacion creada
+
+*******************************************************************************************
+
+9. Lógica de App Angular
+
+-app -> carpeta nueva "interfaces" -> dentro de carpeta: ng generate interface interfaces/departamento
+-desarrollar interfaces
+
+-crear carpeta environments / desarrollar environment.ts
+
+-crear servicios en nueva carpeta services -> ng g s services/departamento
+-eliminar archivos .spec y trabajar con los .service.ts
+
+
+*******************************************************************************************
+
+10. Angular Material
+
+-trabajar en app.module.ts
+
+-importar componentes necesarios desde Angular Material ej: boton
+import {MatButtonModule} from '@angular/material/button';
+
+-npm install moment --save
+-npm install @angular/material-moment-adapter
+
+
+*******************************************************************************************
+
+11. GET POST PUT DELETE empleados
